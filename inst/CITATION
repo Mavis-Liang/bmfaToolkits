@@ -1,0 +1,16 @@
+bibentry(
+  bibtype = "Article",
+  title   = "Bayesian integrative factor analysis methods, with application in
+nutrition and genomics data",
+  author  = c(person("Mavis", "Liang")),
+  year    = "2025",
+  journal = "Statistics in Medicine",
+  note    = "See the online tutorial book and GitHub repository for full context."
+)
+
+# Additional method citations can be added here, e.g.:
+# - MSFA / BMSFA
+# - MOM-SS (BFR.BE)
+# - SUFA
+# - PFA
+# - Tetris

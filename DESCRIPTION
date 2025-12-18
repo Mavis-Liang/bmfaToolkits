@@ -1,0 +1,42 @@
+Package: bifaToolkits
+Type: Package
+Title: Toolkits for Multiple Bayesian Integrative Factor Analysis 
+Version: 0.0.1
+Authors@R: c(
+    person("Mavis", "Liang", role = c("aut", "cre"),
+           email = "mavis.liang@example.com")
+  )
+Description: Lightweight wrappers and post-processing helpers used in the
+    'Bayesian Integrative Factor Analysis' tutorial/paper. The package provides
+    separate fit_* and postprocess_* functions for multiple backends (e.g.,
+    BMSFA, MOM-SS, SUFA, PFA, Tetris, stacked FA, independent FA), plus small
+    example datasets and preprocessing utilities. Some backends are optional
+    and require installing additional packages from GitHub/Bioconductor.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: R (>= 4.1.0)
+Imports:
+    stats,
+    utils
+Suggests:
+    MSFA,
+    BFR.BE,
+    SUFA,
+    expm,
+    clue,
+    combinat,
+    R.utils,
+    Rcpp,
+    Matrix,
+    remotes,
+    BiocManager,
+    curatedOvarianData,
+    ggplot2,
+    reshape2,
+    latex2exp,
+    knitr,
+    rmarkdown,
+    doParallel
+VignetteBuilder: knitr
