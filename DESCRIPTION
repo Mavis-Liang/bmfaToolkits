@@ -40,5 +40,5 @@ Suggests:
     rmarkdown,
     doParallel
 VignetteBuilder: knitr
-URL: https://github.com/Mavis-Liang/bifaToolkits
+URL: https://github.com/Mavis-Liang/bifaToolkits, https://mavis-liang.github.io/bifaToolkits/
 BugReports: https://github.com/Mavis-Liang/bifaToolkits/issues
