@@ -40,3 +40,5 @@ Suggests:
     rmarkdown,
     doParallel
 VignetteBuilder: knitr
+URL: https://github.com/Mavis-Liang/bifaToolkits
+BugReports: https://github.com/Mavis-Liang/bifaToolkits/issues
