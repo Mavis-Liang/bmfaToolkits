@@ -1,8 +1,5 @@
 # bifaToolkits
 
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/Mavis-Liang/bifaToolkits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Mavis-Liang/bifaToolkits/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
 
 Toolkits and reproducible workflows for Bayesian integrative factor analysis methods, with a lightweight “works out of the box” interface and optional backends for additional models.
 

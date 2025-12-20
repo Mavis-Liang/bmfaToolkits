@@ -1,5 +1,5 @@
 ---
-title: "bifaToolkits package: toy-data workflows for each method"
+title: "Toy-data workflows"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Toy-data workflows}
@@ -102,7 +102,7 @@ You specify:
 
 You can control MCMC via `control = list(nrun = ..., burn = ...)`.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit0 <- fit_bmsfa(
   Y_list = Y_list,
   k = 5, # Overspecified
@@ -115,7 +115,7 @@ fit0 <- fit_bmsfa(
 
 ## A2. Post-process
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 post0 <- postprocess_bmsfa(fit0)
 
 names(post0)
@@ -123,7 +123,7 @@ names(post0)
 
 ## A3. Select dimensions and refit
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 select_k_bmsfa(post0, cutoff = 0.05)
 select_js_bmsfa(post0, cutoff = 0.05)
 
@@ -139,7 +139,7 @@ out <- fit_bmsfa_2step(
 
 ## A4. Fit two-step BMSFA in one call
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 out <- fit_bmsfa_2step(
   Y_list = Y_list,
   k = 5, # Overspecified
@@ -158,7 +158,7 @@ out <- fit_bmsfa_2step(
 
 ## B1. Fit
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit0 <- fit_stack_fa(
   Y_list = Y_list,
   k = 5, # Overspecified
@@ -172,14 +172,14 @@ fit0 <- fit_stack_fa(
 
 `postprocess_stack_fa()` takes `S` so it can return a per-study list for `SigmaMarginal`.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 post0 <- postprocess_stack_fa(fit0, S = S)
 names(post0)
 ```
 
 ## B3. Select K and refit
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 select_k_stack_fa(post0, cutoff = 0.05)
 
 out <- fit_stack_fa_2step(
@@ -192,7 +192,7 @@ out <- fit_stack_fa_2step(
 
 ## B4. Fit two-step Stack FA in one call
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 out <- fit_stack_fa_2step(
   Y_list = Y_list,
   k = 4,# Overspecified
@@ -212,7 +212,7 @@ You specify `j_s` as either:
 - a single integer (recycled to all studies), or
 - a length-`S` integer vector.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit0 <- fit_ind_fa(
   Y_list = Y_list,
   j_s = rep(3, S),
@@ -224,7 +224,7 @@ fit0 <- fit_ind_fa(
 
 ## C2. Post-process, select J_s, refit
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 post0 <- postprocess_ind_fa(fit0)
 select_js_ind_fa(post0, cutoff = 0.05)
 
@@ -238,7 +238,7 @@ out <- fit_ind_fa_2step(
 
 ## C3. Fit two-step Ind FA in one call
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 out <- fit_ind_fa_2step(
   Y_list = Y_list,
   j_s = rep(3, S),
@@ -267,7 +267,7 @@ and forwards `q` and `v`.
 
 Example: two synthetic covariates per subject:
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 X_list <- lapply(Y_list, function(Y) {
   n <- nrow(Y)
   cbind(x1 = rnorm(n), x2 = rnorm(n))
@@ -276,7 +276,7 @@ X_list <- lapply(Y_list, function(Y) {
 
 ## D2. Fit and post-process
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit <- fit_momss(
   Y_list = Y_list,
   k = 6,      
@@ -390,7 +390,7 @@ out <- fit_tetris_2step(
 
 Example:
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit <- fit_integrative_fa("bmsfa", Y_list = Y_list, k = 4, j_s = rep(2, S))
 post <- postprocess_integrative_fa("bmsfa", fit)
 ```
