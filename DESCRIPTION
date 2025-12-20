@@ -21,9 +21,6 @@ Imports:
     stats,
     utils
 Suggests:
-    MSFA,
-    BFR.BE,
-    SUFA,
     expm,
     clue,
     combinat,

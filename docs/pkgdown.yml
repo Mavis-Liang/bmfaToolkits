@@ -3,4 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   toy_workflows: toy_workflows.html
-last_built: 2025-12-18T15:42Z
+last_built: 2025-12-20T08:03Z
+urls:
+  reference: https://mavis-liang.github.io/bifaToolkits/reference
+  article: https://mavis-liang.github.io/bifaToolkits/articles

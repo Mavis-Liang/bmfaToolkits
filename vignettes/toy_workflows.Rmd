@@ -2,7 +2,7 @@
 title: "bifaToolkits package: toy-data workflows for each method"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{bifaToolkits package: toy-data workflows for each method}
+  %\VignetteIndexEntry{Toy-data workflows}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -398,7 +398,7 @@ post <- postprocess_integrative_fa("bmsfa", fit)
 
 This function give a nice heatmap plot for the loadings
 
-```{r eval=TRUE}
+```{r eval=TRUE, fig.alt="Shared loading."}
 plot_single_loadings(mat = out$Phi, fill_limits = c(-2, 2)) # Displays grey if values are out of range
 ```
 

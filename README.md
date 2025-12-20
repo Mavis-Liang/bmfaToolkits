@@ -28,9 +28,11 @@ If a backend is missing, the corresponding fit_*() function will give a clear me
 
 Detail usage see https://mavis-liang.github.io/bifaToolkits/. Navigate to the "Articles" tab for vignettes.
 
+Can also refer to https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/.
+
 ## Quick start (toy data)
 
-```{r}
+```
 library(bifaToolkits)
 
 toy <- readRDS(system.file("extdata", "toy.rds", package = "bifaToolkits", mustWork = TRUE))
