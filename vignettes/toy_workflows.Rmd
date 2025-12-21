@@ -16,7 +16,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 Many methods are implemented in **optional backends** (GitHub/Bioconductor packages, or bundled scripts).
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # install.packages("remotes")
 # remotes::install_local("path/to/bifaToolkits")  # or install from your repo
 library(bifaToolkits)
@@ -24,7 +24,7 @@ library(bifaToolkits)
 
 Check what you can run on your machine:
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 library(bifaToolkits)
 available_backends()
 ```
@@ -59,7 +59,7 @@ and no need t `library` it after installing.
 
 The toy data live in `inst/extdata/toy.rds`. You can load it using `system.file()`.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 toy <- readRDS(system.file("extdata", "toy.rds", package = "bifaToolkits", mustWork = TRUE))
 str(toy, max.level = 2)
 ```
@@ -67,7 +67,7 @@ str(toy, max.level = 2)
 The package wrappers expect `Y_list`: a list of study matrices with the same number of columns (variables).
 
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 Y_list <- toy$Y_list
 S <- length(Y_list)
 P <- ncol(Y_list[[1]])
@@ -326,7 +326,7 @@ PFA scripts are bundled in `inst/extdata/pfa/`. The wrapper:
 
 ## F1. Fit
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 fit <- fit_pfa(
   Y_list = Y_list,
   k = 6, # Overspecified
@@ -340,7 +340,7 @@ fit <- fit_pfa(
 
 ## F2. Post-process and select K
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 post <- postprocess_pfa(fit)
 select_k_pfa(post)
 ```
@@ -360,7 +360,7 @@ The “3-step” workflow from the tutorial is:
 
 ## G1. Manual 3-step pipeline
 
-```{r eval=TRUE, warning=FALSE, message=FALSE}
+```{r eval=FALSE, warning=FALSE, message=FALSE}
 fit1 <- fit_tetris(Y_list, alpha = "auto", beta = 1, fixed_bigT = FALSE, nrun = 500, burn = 200, nprint = 100) # Reduced iterations a faster runtime
 big_T <- select_T_tetris(fit1)  # passes alpha_IBP and S from fit1 metadata by default
 fit2 <- fit_tetris(Y_list, alpha = fit1$meta$alpha, beta = 1, fixed_bigT = TRUE, bigT = big_T,
@@ -370,7 +370,7 @@ out <- postprocess_tetris(fit2)
 
 ## G2. One-shot pipeline (recommended)
 
-```{r eval=TRUE, warning=FALSE, message=FALSE}
+```{r eval=FALSE, warning=FALSE, message=FALSE}
 out <- fit_tetris_2step(
   Y_list = Y_list,
   alpha = "auto",   # ceiling(1.25 * S)
@@ -398,7 +398,7 @@ post <- postprocess_integrative_fa("bmsfa", fit)
 
 This function give a nice heatmap plot for the loadings
 
-```{r eval=TRUE, fig.alt="Shared loading."}
+```{r eval=FALSE, fig.alt="Shared loading."}
 plot_single_loadings(mat = out$Phi, fill_limits = c(-2, 2)) # Displays grey if values are out of range
 ```
 
@@ -412,6 +412,6 @@ plot_single_loadings(mat = out$Phi, fill_limits = c(-2, 2)) # Displays grey if v
 
 ## Session info
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 sessionInfo()
 ```
