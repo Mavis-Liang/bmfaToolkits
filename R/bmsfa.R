@@ -13,15 +13,40 @@ fit_bmsfa <- function(Y_list, k, j_s,
                       control = list(nrun = 3000, burn = 2000),
                       ...) {
   .require_pkg("MSFA", "BMSFA backend")
-  Y_list <- .as_matrix_list(Y_list)
+  
+  caps <- .msfa_capabilities()
+  
+  dots <- list(X_s = Y_list, k = k, j_s = j_s, control= control,
+               outputlevel = outputlevel, ...)
+  
+  if (caps$has_center) {
+    dots$center <- isTRUE(centering)
+  } else if (!isTRUE(centering)) {
+    msg <- paste0(
+      "Your installed MSFA (v", caps$version, ") does not support `center=`; ",
+      "MSFA will use its internal standardization. ",
+      "To control centering/scaling, install Mavis' version of MSFA that adds these options."
+    )
+  }
+  
+  if (caps$has_scale) {
+    dots$scale <- isTRUE(scaling)
+  } else if (isFALSE(scaling)) {
+    msg <- paste0(
+      "Your installed MSFA (v", caps$version, ") does not support `scale=`; ",
+      "MSFA will use its internal standardization. ",
+      "To disable scaling, install Mavis' version of MSFA that adds `scale=`."
+    )
+  }
+  dots$X_s <- .as_matrix_list(Y_list)
   S <- length(Y_list)
-  if (length(j_s) == 1) j_s <- rep(as.integer(j_s), S)
+  if (length(j_s) == 1) dots$j_s <- rep(as.integer(j_s), S)
   if (length(j_s) != S) stop("j_s must be length 1 or length S.", call. = FALSE)
+  
+  
 
-  fit <- MSFA::sp_msfa(Y_list, k = k, j_s = j_s,
-                       outputlevel = outputlevel,
-                       scaling = scaling, centering = centering,
-                       control = control, ...)
+  fit <- do.call(getFromNamespace("sp_msfa", "MSFA"), dots)
+  
   .new_bifa_fit("bmsfa", fit, meta = list(S = S, P = ncol(Y_list[[1]]), k = k, j_s = j_s))
 }
 

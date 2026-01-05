@@ -14,7 +14,7 @@
   invisible(TRUE)
 }
 
-# For MOMSS, which needs several packages to be attached. (Because it does not use 
+# For MOMSS that needs several packages to be attached. (Because it does not use 
 # namespaces properly)
 .with_attached_pkgs <- function(pkgs, thunk) {
   stopifnot(is.function(thunk))
@@ -86,6 +86,18 @@
   
   thunk()
 }
+
+# For MSFA: if it's DeVito's version or Mavis's version that supports centering/scaling
+.msfa_capabilities <- function() {
+  f <- getFromNamespace("sp_msfa", "MSFA")
+  args <- names(formals(f))
+  list(
+    has_center = "center" %in% args,
+    has_scale  = "scale"  %in% args,
+    version    = as.character(utils::packageVersion("MSFA"))
+  )
+}
+
 
 .find_pkg_root <- function(start = getwd()) {
   p <- normalizePath(start, winslash = "/", mustWork = FALSE)
