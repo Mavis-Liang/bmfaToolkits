@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/Mavis-Liang/bifaToolkits/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/Mavis-Liang/bmfaToolkits/blob/main/inst/CITATION)
 
 Liang M (2025). “Bayesian integrative factor analysis methods, with
 application in nutrition and genomics data.” *Statistics in Medicine*.

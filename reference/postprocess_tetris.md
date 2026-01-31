@@ -15,7 +15,7 @@ postprocess_tetris(fit, num_samps = NULL)
 - fit:
 
   A `bifa_fit` from
-  [`fit_tetris()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_tetris.md)
+  [`fit_tetris()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_tetris.md)
   or a raw Tetris fit.
 
 - num_samps:

@@ -13,7 +13,7 @@ select_T_tetris(fit, alpha_IBP = NULL, S = NULL, ...)
 - fit:
 
   A `bifa_fit` returned by
-  [`fit_tetris()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_tetris.md)
+  [`fit_tetris()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_tetris.md)
   (typically the non-fixed run).
 
 - alpha_IBP:

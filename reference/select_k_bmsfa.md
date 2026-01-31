@@ -13,7 +13,7 @@ select_k_bmsfa(post, cutoff = 0.05)
 - post:
 
   Output of
-  [`postprocess_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_bmsfa.md).
+  [`postprocess_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_bmsfa.md).
 
 - cutoff:
 

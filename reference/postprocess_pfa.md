@@ -13,7 +13,7 @@ postprocess_pfa(fit)
 - fit:
 
   A `bifa_fit` from
-  [`fit_pfa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_pfa.md)
+  [`fit_pfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_pfa.md)
   or a raw PFA fit.
 
 ## Value

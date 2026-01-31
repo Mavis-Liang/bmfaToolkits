@@ -3,7 +3,7 @@
 PFA in the tutorial is provided as scripts (R + C++ via Rcpp). This
 wrapper expects the PFA scripts to be bundled under `inst/extdata/pfa/`
 in this package source. At runtime, the backend is loaded via
-[`load_backend()`](https://mavis-liang.github.io/bifaToolkits/reference/load_backend.md),
+[`load_backend()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_backend.md),
 which sources all `.R` files in that directory and compiles `PFA.cpp`
 (if present) via
 [`Rcpp::sourceCpp()`](https://rdrr.io/pkg/Rcpp/man/sourceCpp.html).

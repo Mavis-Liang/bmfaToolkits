@@ -1,46 +1,7 @@
-# bifaToolkits
+# bmfaToolkits
 
-Toolkits and reproducible workflows for Bayesian integrative factor
-analysis methods, with a lightweight “works out of the box” interface
-and optional backends for additional models.
+If you are not redirected automatically, open the **Toy workflows**
+article:
 
-## Install
-
-### Development version (GitHub)
-
-``` r
-install.packages("remotes")
-remotes::install_github("Mavis-Liang/bifaToolkits")
-```
-
-## Optional backends
-
-Some methods depend on optional packages and/or vendored scripts. Use
-available_backends() to see what is usable on your system, and install
-extras as needed.
-
-    library(bifaToolkits)
-    available_backends()
-
-If a backend is missing, the corresponding fit\_\*() function will give
-a clear message telling you what to install.
-
-Detail usage see <https://mavis-liang.github.io/bifaToolkits/>. Navigate
-to the “Articles” tab for vignettes.
-
-Can also refer to
-<https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/>.
-
-## Quick start (toy data)
-
-    library(bifaToolkits)
-
-    toy <- readRDS(system.file("extdata", "toy.rds", package = "bifaToolkits", mustWork = TRUE))
-    Y_list <- toy$Y_list
-
-    # Example: MOM-SS (requires BFR.BE + its runtime deps)
-    fit <- fit_momss(Y_list, k = 6, scaling = FALSE)
-    pp  <- postprocess_momss(fit)
-
-    # Plot an estimated shared covariance (example)
-    plot_single_loadings(pp$Phi, show_colorbar = TRUE)
+- [Toy
+  workflows](https://mavis-liang.github.io/bmfaToolkits/articles/toy_workflows.md)

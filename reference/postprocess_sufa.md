@@ -13,7 +13,7 @@ postprocess_sufa(fit)
 - fit:
 
   A `bifa_fit` from
-  [`fit_sufa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_sufa.md)
+  [`fit_sufa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_sufa.md)
   or a raw SUFA fit.
 
 ## Value

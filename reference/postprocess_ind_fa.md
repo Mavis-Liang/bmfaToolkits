@@ -13,7 +13,7 @@ postprocess_ind_fa(fit)
 - fit:
 
   A `bifa_fit` from
-  [`fit_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_ind_fa.md)
+  [`fit_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa.md)
   or a raw list of `MSFA::sp_fa()` fits.
 
 ## Value

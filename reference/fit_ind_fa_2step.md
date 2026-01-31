@@ -30,4 +30,4 @@ fit_ind_fa_2step(Y_list, post_fit0 = NULL, j_s = NULL, cutoff = 0.05, ...)
 - ...:
 
   Passed to
-  [`fit_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_ind_fa.md).
+  [`fit_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa.md).

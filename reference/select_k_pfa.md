@@ -14,7 +14,7 @@ select_k_pfa(post, threshold = 0.001)
 - post:
 
   Output of
-  [`postprocess_pfa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_pfa.md).
+  [`postprocess_pfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_pfa.md).
 
 - threshold:
 

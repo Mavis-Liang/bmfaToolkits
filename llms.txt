@@ -1,67 +1,31 @@
-# bifaToolkits
+# bmfaToolkits
 
-Toolkits and reproducible workflows for Bayesian integrative factor
-analysis methods, with a lightweight “works out of the box” interface
-and optional backends for additional models.
+If you are not redirected automatically, open the **Toy workflows**
+article:
 
-## Install
-
-### Development version (GitHub)
-
-``` r
-install.packages("remotes")
-remotes::install_github("Mavis-Liang/bifaToolkits")
-```
-
-## Optional backends
-
-Some methods depend on optional packages and/or vendored scripts. Use
-available_backends() to see what is usable on your system, and install
-extras as needed.
-
-    library(bifaToolkits)
-    available_backends()
-
-If a backend is missing, the corresponding fit\_\*() function will give
-a clear message telling you what to install.
-
-Detail usage see <https://mavis-liang.github.io/bifaToolkits/>. Navigate
-to the “Articles” tab for vignettes.
-
-Can also refer to
-<https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/>.
-
-## Quick start (toy data)
-
-    library(bifaToolkits)
-
-    toy <- readRDS(system.file("extdata", "toy.rds", package = "bifaToolkits", mustWork = TRUE))
-    Y_list <- toy$Y_list
-
-    # Example: MOM-SS (requires BFR.BE + its runtime deps)
-    fit <- fit_momss(Y_list, k = 6, scaling = FALSE)
-    pp  <- postprocess_momss(fit)
-
-    # Plot an estimated shared covariance (example)
-    plot_single_loadings(pp$Phi, show_colorbar = TRUE)
+- [Toy
+  workflows](https://mavis-liang.github.io/bmfaToolkits/articles/toy_workflows.md)
 
 # Package index
 
 ## All functions
 
-- [`available_backends()`](https://mavis-liang.github.io/bifaToolkits/reference/available_backends.md)
+- [`available_backends()`](https://mavis-liang.github.io/bmfaToolkits/reference/available_backends.md)
   : Check which backends are installed and usable
 
-- [`backend_script_dir()`](https://mavis-liang.github.io/bifaToolkits/reference/backend_script_dir.md)
+- [`backend_script_dir()`](https://mavis-liang.github.io/bmfaToolkits/reference/backend_script_dir.md)
   : Get the installed directory for a script-based backend
 
-- [`bifa_extdata`](https://mavis-liang.github.io/bifaToolkits/reference/bifa_extdata.md)
+- [`bifa_extdata`](https://mavis-liang.github.io/bmfaToolkits/reference/bifa_extdata.md)
   : Example data shipped in extdata
 
-- [`fit_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_bmsfa.md)
+- [`fit_blast()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_blast.md)
+  : Fit BLAST (script backend)
+
+- [`fit_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa.md)
   : Fit BMSFA via MSFA::sp_msfa
 
-- [`fit_bmsfa_2step()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_bmsfa_2step.md)
+- [`fit_bmsfa_2step()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa_2step.md)
   :
 
   Fit BMSFA all-at-once If `post_fit0` is NULL, fit an initial BMSFA
@@ -69,110 +33,133 @@ Can also refer to
   factors and refit. Otherwise, use the `post_fit0` then select the
   number of factors and refit.
 
-- [`fit_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_ind_fa.md)
+- [`fit_cavi()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_cavi.md)
+  : Fit VI-MSFA CAVI (variational MSFA)
+
+- [`fit_cavi_2step()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_cavi_2step.md)
+  : Fit CAVI with automatic factor selection (2-step)
+
+- [`fit_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa.md)
   : Fit independent factor analysis (Ind FA) via MSFA::sp_fa (per study)
 
-- [`fit_ind_fa_2step()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_ind_fa_2step.md)
+- [`fit_ind_fa_2step()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa_2step.md)
   :
 
   Fit Ind FA all at once If `post_fit0` is NULL, fit an initial IndFA
   with given `j_s`, then automatically select the number of factors and
   refit.
 
-- [`fit_integrative_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_integrative_fa.md)
+- [`fit_integrative_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_integrative_fa.md)
   : Fit an integrative factor model with a chosen method within a
   general interface
 
-- [`fit_momss()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_momss.md)
+- [`fit_momss()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_momss.md)
   : Fit MOM-SS (MOM-SS / BFR.BE backend)
 
-- [`fit_pfa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_pfa.md)
+- [`fit_pfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_pfa.md)
   : Fit PFA (Perturbed Factor Analysis; script backend)
 
-- [`fit_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_stack_fa.md)
+- [`fit_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_stack_fa.md)
   : Fit stacked factor analysis (Stack FA) via MSFA::sp_fa
 
-- [`fit_stack_fa_2step()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_stack_fa_2step.md)
+- [`fit_stack_fa_2step()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_stack_fa_2step.md)
   :
 
   Fit Stack FA all-at-once If `post_fit0` is NULL, fit an initial
   StackFA with given `k`, then automatically select the number of
   factors and refit.
 
-- [`fit_sufa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_sufa.md)
+- [`fit_sufa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_sufa.md)
   : Fit SUFA
 
-- [`fit_tetris()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_tetris.md)
+- [`fit_tetris()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_tetris.md)
   : Fit Tetris (single run)
 
-- [`fit_tetris_2step()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_tetris_2step.md)
+- [`fit_tetris_2step()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_tetris_2step.md)
   : Run the full Tetris pipeline: initial fit -\> choose T -\> fixed
   refit
 
-- [`install_backend()`](https://mavis-liang.github.io/bifaToolkits/reference/install_backend.md)
+- [`install_backend()`](https://mavis-liang.github.io/bmfaToolkits/reference/install_backend.md)
   : Install optional backends used in the tutorial
 
-- [`load_backend()`](https://mavis-liang.github.io/bifaToolkits/reference/load_backend.md)
+- [`load_backend()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_backend.md)
   : Load a bundled script backend into a private environment
 
-- [`load_curated_ovarian()`](https://mavis-liang.github.io/bifaToolkits/reference/load_curated_ovarian.md)
+- [`load_curated_ovarian()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_curated_ovarian.md)
   : Load curated ovarian data (Bioconductor)
 
-- [`load_simulated_nutrition_data()`](https://mavis-liang.github.io/bifaToolkits/reference/load_simulated_nutrition_data.md)
+- [`load_simulated_nutrition_data()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_simulated_nutrition_data.md)
   : Load the simulated nutrition dataset from this package
 
-- [`load_toy()`](https://mavis-liang.github.io/bifaToolkits/reference/load_toy.md)
+- [`load_toy()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_toy.md)
   : Load the toy example object
 
-- [`load_toy_data()`](https://mavis-liang.github.io/bifaToolkits/reference/load_toy_data.md)
+- [`load_toy_data()`](https://mavis-liang.github.io/bmfaToolkits/reference/load_toy_data.md)
   : Load the toy dataset from this package
 
-- [`plot_single_loadings()`](https://mavis-liang.github.io/bifaToolkits/reference/plot_single_loadings.md)
+- [`plot_single_loadings()`](https://mavis-liang.github.io/bmfaToolkits/reference/plot_single_loadings.md)
   : Plot a loading matrix as a heatmap
 
-- [`postprocess_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_bmsfa.md)
+- [`post_BLAST()`](https://mavis-liang.github.io/bmfaToolkits/reference/post_BLAST.md)
+  [`postprocess_blast()`](https://mavis-liang.github.io/bmfaToolkits/reference/post_BLAST.md)
+  : Post-process BLAST output into a standard format
+
+- [`post_CAVI()`](https://mavis-liang.github.io/bmfaToolkits/reference/post_CAVI.md)
+  [`postprocess_cavi()`](https://mavis-liang.github.io/bmfaToolkits/reference/post_CAVI.md)
+  : Post-process CAVI output into a standard format
+
+- [`postprocess_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_bmsfa.md)
   : Post-process BMSFA output
 
-- [`postprocess_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_ind_fa.md)
+- [`postprocess_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_ind_fa.md)
   : Post-process Ind FA output (nutrition tutorial)
 
-- [`postprocess_integrative_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_integrative_fa.md)
+- [`postprocess_integrative_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_integrative_fa.md)
   : Post-process an integrative factor model fit
 
-- [`postprocess_momss()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_momss.md)
+- [`postprocess_momss()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_momss.md)
   : Post-process MOM-SS output
 
-- [`postprocess_pfa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_pfa.md)
+- [`postprocess_pfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_pfa.md)
   : Post-process PFA output (nutrition tutorial)
 
-- [`postprocess_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_stack_fa.md)
+- [`postprocess_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_stack_fa.md)
   : Post-process Stack FA output (nutrition tutorial)
 
-- [`postprocess_sufa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_sufa.md)
+- [`postprocess_sufa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_sufa.md)
   : Post-process SUFA output
 
-- [`postprocess_tetris()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_tetris.md)
+- [`postprocess_tetris()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_tetris.md)
   : Post-process Tetris output
 
-- [`select_T_tetris()`](https://mavis-liang.github.io/bifaToolkits/reference/select_T_tetris.md)
+- [`refit_cavi()`](https://mavis-liang.github.io/bmfaToolkits/reference/refit_cavi.md)
+  : Refit CAVI after selecting the number of factors
+
+- [`select_T_tetris()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_T_tetris.md)
   : Select big_T (A matrix) for Tetris
 
-- [`select_js_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/select_js_bmsfa.md)
+- [`select_js_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_js_bmsfa.md)
   : Select J_s for BMSFA from study-specific covariances
 
-- [`select_js_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/select_js_ind_fa.md)
+- [`select_js_cavi()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_js_cavi.md)
+  : Select J_s for CAVI from study-specific covariances
+
+- [`select_js_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_js_ind_fa.md)
   : Select J_s for Ind FA (per-study) using eigen proportion rule
 
-- [`select_k_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/select_k_bmsfa.md)
+- [`select_k_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_k_bmsfa.md)
   : Select K for BMSFA from common covariance
 
-- [`select_k_from_sigma()`](https://mavis-liang.github.io/bifaToolkits/reference/select_k_from_sigma.md)
+- [`select_k_cavi()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_k_cavi.md)
+  : Select K for CAVI from the common covariance
+
+- [`select_k_from_sigma()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_k_from_sigma.md)
   : Select number of factors via eigenvalue proportion rule
 
-- [`select_k_pfa()`](https://mavis-liang.github.io/bifaToolkits/reference/select_k_pfa.md)
+- [`select_k_pfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_k_pfa.md)
   : Select K for PFA via nontrivial-column rule
 
-- [`select_k_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/select_k_stack_fa.md)
+- [`select_k_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/select_k_stack_fa.md)
   : Select K for Stack FA using eigen proportion rule
 
 # Articles
@@ -180,4 +167,4 @@ Can also refer to
 ### All vignettes
 
 - [Toy-data
-  workflows](https://mavis-liang.github.io/bifaToolkits/articles/toy_workflows.md):
+  workflows](https://mavis-liang.github.io/bmfaToolkits/articles/toy_workflows.md):

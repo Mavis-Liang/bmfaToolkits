@@ -16,7 +16,7 @@ postprocess_stack_fa(fit, S)
 - fit:
 
   A `bifa_fit` object from
-  [`fit_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_stack_fa.md)
+  [`fit_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_stack_fa.md)
   or a raw `MSFA::sp_fa()` fit.
 
 - S:

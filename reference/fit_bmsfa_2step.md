@@ -43,4 +43,4 @@ fit_bmsfa_2step(
 - ...:
 
   Passed to
-  [`fit_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_bmsfa.md).
+  [`fit_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa.md).

@@ -14,7 +14,7 @@ postprocess_momss(fit)
 - fit:
 
   A `bifa_fit` from
-  [`fit_momss()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_momss.md)
+  [`fit_momss()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_momss.md)
   or a raw MOM-SS fit.
 
 ## Value

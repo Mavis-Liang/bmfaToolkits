@@ -13,7 +13,7 @@ select_js_ind_fa(post, cutoff = 0.05)
 - post:
 
   Output of
-  [`postprocess_ind_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_ind_fa.md).
+  [`postprocess_ind_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_ind_fa.md).
 
 - cutoff:
 

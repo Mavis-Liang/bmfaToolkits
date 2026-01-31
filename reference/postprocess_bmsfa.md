@@ -15,7 +15,7 @@ postprocess_bmsfa(fit)
 - fit:
 
   A `bifa_fit` from
-  [`fit_bmsfa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_bmsfa.md)
+  [`fit_bmsfa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa.md)
   or a raw `MSFA::sp_msfa()` fit.
 
 ## Value

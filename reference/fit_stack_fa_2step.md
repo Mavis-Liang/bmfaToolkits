@@ -31,4 +31,4 @@ fit_stack_fa_2step(Y_list, post_fit0 = NULL, k = NULL, cutoff = 0.05, ...)
 - ...:
 
   Passed to
-  [`fit_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/fit_stack_fa.md).
+  [`fit_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/fit_stack_fa.md).

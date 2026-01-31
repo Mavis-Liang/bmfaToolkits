@@ -13,7 +13,7 @@ select_k_stack_fa(post, cutoff = 0.05)
 - post:
 
   Output of
-  [`postprocess_stack_fa()`](https://mavis-liang.github.io/bifaToolkits/reference/postprocess_stack_fa.md).
+  [`postprocess_stack_fa()`](https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_stack_fa.md).
 
 - cutoff:
 
