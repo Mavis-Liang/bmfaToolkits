@@ -2,9 +2,9 @@
 
 Toolkits and reproducible workflows for Bayesian integrative factor analysis methods, with a lightweight “works out of the box” interface and optional backends for additional models.
 
-Detail usage see https://mavis-liang.github.io/bmfaToolkits/. Navigate to the "Articles" tab for vignettes.
+Detail usage see [https://mavis-liang.github.io/bmfaToolkits/](https://mavis-liang.github.io/bmfaToolkits/). Navigate to the "Articles" tab for vignettes.
 
-Can also refer to https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/. (Archived 1/31/2026)
+Can also refer to [https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/](https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/). (Archived 1/31/2026)
 
 
 ## Install

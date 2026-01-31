@@ -1,9 +1,7 @@
-<script>
-window.location.replace("articles/toy_workflows.html");
-</script>
+---
+title: "Demo"
+---
 
-# bmfaToolkits
+<meta http-equiv="refresh" content="0; url=articles/toy_workflows.html">
 
-If you are not redirected automatically, open the **Toy workflows** article:
-
-- [Toy workflows](articles/toy_workflows.html)
+If you are not redirected automatically, open: [Toy workflows](articles/toy_workflows.html)
