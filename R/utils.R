@@ -7,7 +7,7 @@
     msg <- paste0(
       "Required package '", pkg, "' is not installed.\n",
       if (!is.null(why)) paste0("Needed for: ", why, "\n") else "",
-      "Try: bifaToolkits::install_backend(\"", tolower(pkg), "\") or install it manually."
+      "Try: bmfaToolkits::install_backend(\"", tolower(pkg), "\") or install it manually."
     )
     stop(msg, call. = FALSE)
   }

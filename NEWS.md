@@ -1,3 +1,3 @@
-# bifaToolkits 0.0.1
+# bmfaToolkits 0.0.1
 
 * Initial CRAN submission.

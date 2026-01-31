@@ -13,6 +13,6 @@ load_curated_ovarian(...)
 An object from \code{curatedOvarianData}.
 }
 \description{
-This does not ship the data inside \code{bifaToolkits}. Instead, it provides a thin wrapper
+This does not ship the data inside \code{bmfaToolkits}. Instead, it provides a thin wrapper
 that loads from the Bioconductor package \code{curatedOvarianData}.
 }

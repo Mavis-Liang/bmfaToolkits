@@ -18,7 +18,7 @@ NULL
 #' toy <- load_toy()
 #' str(toy)
 load_toy <- function() {
-  f <- system.file("extdata", "toy.rds", package = "bifaToolkits", mustWork = TRUE)
+  f <- system.file("extdata", "toy.rds", package = "bmfaToolkits", mustWork = TRUE)
   readRDS(f)
 }
 
@@ -32,6 +32,6 @@ load_toy <- function() {
 #' nut <- load_simulated_nutrition_data()
 #' str(nut)
 load_simulated_nutrition_data <- function() {
-  f <- system.file("extdata", "simulated_nutrition_data.rds", package = "bifaToolkits", mustWork = TRUE)
+  f <- system.file("extdata", "simulated_nutrition_data.rds", package = "bmfaToolkits", mustWork = TRUE)
   readRDS(f)
 }

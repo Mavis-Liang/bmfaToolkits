@@ -7,22 +7,23 @@
 #' @export
 available_backends <- function() {
   backends <- data.frame(
-    backend = c("bmsfa", "stack_fa", "ind_fa", "momss", "sufa", "pfa", "tetris", "curated_ovarian"),
-    requires = c("MSFA", "MSFA", "MSFA", "BFR.BE", "SUFA", "scripts", "scripts", "curatedOvarianData"),
+    backend = c("bmsfa","stack_fa","ind_fa","cavi","blast","momss","sufa","pfa","tetris","curated_ovarian"),
+    requires = c("MSFA","MSFA","MSFA","VIMSFA","scripts","BFR.BE","SUFA","scripts","scripts","curatedOvarianData"),
     stringsAsFactors = FALSE
   )
   backends$available <- vapply(backends$backend, function(b) {
     if (b %in% c("bmsfa","stack_fa","ind_fa")) return(requireNamespace("MSFA", quietly = TRUE))
+    if (b == "cavi") return(requireNamespace("VIMSFA", quietly = TRUE))
     if (b == "momss") return(requireNamespace("BFR.BE", quietly = TRUE))
     if (b == "sufa") return(requireNamespace("SUFA", quietly = TRUE))
     if (b == "curated_ovarian") return(requireNamespace("curatedOvarianData", quietly = TRUE))
-    if (b %in% c("pfa","tetris")) return(nzchar(backend_script_dir(b)))
+    if (b %in% c("pfa","tetris","blast")) return(nzchar(backend_script_dir(b)))
     FALSE
   }, logical(1))
   backends$hint <- vapply(backends$backend, function(b) {
-    if (b %in% c("pfa","tetris")) return("Bundled in package under inst/extdata/")
+    if (b %in% c("pfa","tetris","blast")) return("Bundled in package under inst/extdata/")
     if (b == "curated_ovarian") return("BiocManager::install(\"curatedOvarianData\")")
-    paste0("bifaToolkits::install_backend(\"", b, "\")")
+    paste0("bmfaToolkits::install_backend(\"", b, "\")")
   }, character(1))
   backends
 }
@@ -33,14 +34,17 @@ available_backends <- function() {
 #'
 #' - For GitHub packages, we call `remotes::install_github()`.
 #' - For Bioconductor packages, we call `BiocManager::install()`.
-#' - For script-based methods (PFA / Tetris), scripts are bundled under `inst/extdata/`.
+#' - For script-based methods (PFA / Tetris / BLAST), scripts are bundled under `inst/extdata/`.
 #'
-#' @param backend One of: "bmsfa", "momss", "sufa", "curated_ovarian".
+#' @param backend One of: "bmsfa", "momss", "sufa", "curated_ovarian", "cavi", "blast".
 #' @param ... Passed to `remotes::install_github()` or `BiocManager::install()` when applicable.
 #' @export
 install_backend <- function(backend, ...) {
   backend <- tolower(backend)
-  
+
+
+  ###BLAST_EARLY_BLOCK###
+
   .require_pkg("remotes", "installing backends from GitHub")
   
   # safer download defaults (esp. inside RStudio)
@@ -76,7 +80,44 @@ install_backend <- function(backend, ...) {
     return(invisible(TRUE))
   }
   
-  if (backend == "momss") {
+  
+  if (backend == "cavi") {
+    .require_pkg("remotes", "installing VIMSFA (VI-MSFA) from GitHub")
+    remotes::install_github("blhansen/VI-MSFA", ...)
+    return(invisible(TRUE))
+  }
+
+  if (backend == "blast") {
+    # BLAST is not an R package; we download the repo and keep it in a user cache.
+    cache_root <- file.path(tools::R_user_dir("bmfaToolkits", which = "cache"), "backends")
+    dir.create(cache_root, recursive = TRUE, showWarnings = FALSE)
+
+    target <- file.path(cache_root, "blast")
+    if (dir.exists(target)) unlink(target, recursive = TRUE, force = TRUE)
+    dir.create(target, recursive = TRUE, showWarnings = FALSE)
+
+    zip_url <- "https://github.com/maurilorenzo/BLAST/archive/refs/heads/main.zip"
+    tmp <- tempfile(fileext = ".zip")
+    utils::download.file(zip_url, destfile = tmp, mode = "wb", quiet = TRUE)
+
+    tmpdir <- tempfile("blast_unzip_")
+    dir.create(tmpdir)
+    utils::unzip(tmp, exdir = tmpdir)
+
+    # copy extracted content (usually BLAST-main/) into target
+    subs <- list.dirs(tmpdir, recursive = FALSE, full.names = TRUE)
+    src <- if (length(subs) == 1) subs[[1]] else tmpdir
+    files <- list.files(src, full.names = TRUE, recursive = FALSE, all.files = TRUE, no.. = TRUE)
+    for (f in files) file.copy(f, target, recursive = TRUE)
+
+    unlink(tmp, force = TRUE)
+    unlink(tmpdir, recursive = TRUE, force = TRUE)
+
+    message("BLAST backend downloaded to: ", normalizePath(target, winslash = "/", mustWork = FALSE))
+    return(invisible(TRUE))
+  }
+
+if (backend == "momss") {
     if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
     BiocManager::install("sparseMatrixStats", ask = FALSE, update = FALSE)
     if (!requireNamespace("mombf", quietly = TRUE)) install.packages("mombf")
@@ -113,14 +154,14 @@ install_backend <- function(backend, ...) {
 #' Script backends (PFA/Tetris) are bundled inside this package under `inst/extdata/`.
 #' Use this helper to locate them after installation.
 #'
-#' @param backend "pfa" or "tetris".
+#' @param backend "pfa", "tetris", or "blast".
 #' @return Full path to the backend directory inside the installed package.
 #' @export
 backend_script_dir <- function(backend) {
   backend <- tolower(backend)
   
   # 1) installed package
-  dir1 <- system.file("extdata", backend, package = "bifaToolkits")
+  dir1 <- system.file("extdata", backend, package = "bmfaToolkits")
   if (nzchar(dir1) && dir.exists(dir1)) {
     return(normalizePath(dir1, winslash = "/", mustWork = TRUE))
   }
@@ -143,7 +184,7 @@ backend_script_dir <- function(backend) {
 #' For PFA/Tetris, this sources all `.R` files under `inst/extdata/<backend>/`.
 #' For PFA, it also compiles `PFA.cpp` (if present) via `Rcpp::sourceCpp()`.
 #'
-#' @param backend "pfa" or "tetris".
+#' @param backend "pfa", "tetris", or "blast".
 #' @return An environment containing the sourced functions.
 #' @export
 load_backend <- function(backend) {
@@ -189,19 +230,40 @@ load_backend <- function(backend) {
     
     for (f in sort(r_files)) source(f, local = env, chdir = TRUE)
     
-  } else if (backend == "pfa") {
+    } else if (backend == "pfa") {
     if (!requireNamespace("expm", quietly = TRUE)) {
-      stop("Tetris backend requires 'R.utils'. Install it with install.packages('R.utils').",
+      stop("PFA backend requires 'expm'. Install it with install.packages('expm').",
            call. = FALSE)
     }
-    first  <- r_files[grepl("FBPFA-PFA\\.R$", r_files)]
-    second <- r_files[grepl("FBPFA-PFA with fixed latent dim\\.R$", r_files)]
-    
+    if (length(list.files(dir, pattern = "\\\\.cpp$", full.names = TRUE)) > 0) {
+      if (!requireNamespace("Rcpp", quietly = TRUE)) {
+        stop("PFA backend has C++ code but 'Rcpp' is not installed. Install it with install.packages('Rcpp').",
+             call. = FALSE)
+      }
+      for (cpp in sort(list.files(dir, pattern = "\\\\.cpp$", full.names = TRUE))) {
+        Rcpp::sourceCpp(cpp, env = env)
+      }
+    }
+    first  <- r_files[grepl("FBPFA-PFA\\\\.R$", r_files)]
+    second <- r_files[grepl("FBPFA-PFA with fixed latent dim\\\\.R$", r_files)]
     for (f in c(first, second)) source(f, local = env, chdir = TRUE)
-    
+
+  } else if (backend == "blast") {
+    # BLAST repo contains R + optional C++ helpers; compile and source everything.
+    if (length(list.files(dir, pattern = "\\\\.cpp$", full.names = TRUE)) > 0) {
+      if (!requireNamespace("Rcpp", quietly = TRUE)) {
+        stop("BLAST backend has C++ code but 'Rcpp' is not installed. Install it with install.packages('Rcpp').",
+             call. = FALSE)
+      }
+      for (cpp in sort(list.files(dir, pattern = "\\\\.cpp$", full.names = TRUE))) {
+        Rcpp::sourceCpp(cpp, env = env)
+      }
+    }
+    for (f in sort(r_files)) source(f, local = env, chdir = TRUE)
+
   } else {
     stop("Unknown script backend: ", backend, call. = FALSE)
   }
-  
+
   env
 }
