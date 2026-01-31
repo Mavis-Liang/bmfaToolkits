@@ -6,7 +6,7 @@
 #' @return An object read by `readRDS()`.
 #' @export
 load_simulated_nutrition_data <- function() {
-  path <- system.file("extdata", "simulated_nutrition_data.rds", package = "bifaToolkits")
+  path <- system.file("extdata", "simulated_nutrition_data.rds", package = "bmfaToolkits")
   if (path == "") stop("extdata file not found (package not installed correctly).", call. = FALSE)
   readRDS(path)
 }
@@ -19,14 +19,14 @@ load_simulated_nutrition_data <- function() {
 #' @return An object read by `readRDS()`.
 #' @export
 load_toy_data <- function() {
-  path <- system.file("extdata", "toy.rds", package = "bifaToolkits")
+  path <- system.file("extdata", "toy.rds", package = "bmfaToolkits")
   if (path == "") stop("extdata file not found (package not installed correctly).", call. = FALSE)
   readRDS(path)
 }
 
 #' Load curated ovarian data (Bioconductor)
 #'
-#' This does not ship the data inside `bifaToolkits`. Instead, it provides a thin wrapper
+#' This does not ship the data inside `bmfaToolkits`. Instead, it provides a thin wrapper
 #' that loads from the Bioconductor package `curatedOvarianData`.
 #'
 #' @param ... Passed to the underlying data accessor.

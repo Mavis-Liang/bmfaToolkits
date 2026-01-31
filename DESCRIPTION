@@ -1,4 +1,4 @@
-Package: bifaToolkits
+Package: bmfaToolkits
 Type: Package
 Title: Toolkits for Multiple Bayesian Integrative Factor Analysis 
 Version: 0.0.1
@@ -35,7 +35,11 @@ Suggests:
     latex2exp,
     knitr,
     rmarkdown,
-    doParallel
+    doParallel,
+    peakRAM,
+    VIMSFA
+Remotes:
+    blhansen/VI-MSFA
 VignetteBuilder: knitr
-URL: https://github.com/Mavis-Liang/bifaToolkits, https://mavis-liang.github.io/bifaToolkits/
-BugReports: https://github.com/Mavis-Liang/bifaToolkits/issues
+URL: https://github.com/Mavis-Liang/bmfaToolkits, https://mavis-liang.github.io/bmfaToolkits/
+BugReports: https://github.com/Mavis-Liang/bmfaToolkits/issues

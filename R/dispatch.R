@@ -1,6 +1,6 @@
 #' Fit an integrative factor model with a chosen method within a general interface
 #'
-#' @param method One of: "bmsfa", "momss", "sufa", "pfa", "tetris", "stack_fa", "ind_fa".
+#' @param method One of: "bmsfa", "momss", "sufa", "pfa", "tetris", "stack_fa", "ind_fa", "cavi", "blast".
 #' @param ... Passed to the corresponding `fit_*()` function.
 #' @export
 fit_integrative_fa <- function(method, ...) {
@@ -14,6 +14,8 @@ fit_integrative_fa <- function(method, ...) {
     tetris = fit_tetris(...),
     stack_fa = fit_stack_fa(...),
     ind_fa = fit_ind_fa(...),
+    cavi = fit_cavi(...),
+    blast = fit_blast(...),
     stop("Unknown method: ", method, call. = FALSE)
   )
 }
@@ -35,6 +37,8 @@ postprocess_integrative_fa <- function(method, fit, ...) {
     tetris = postprocess_tetris(fit, ...),
     stack_fa = postprocess_stack_fa(fit, ...),
     ind_fa = postprocess_ind_fa(fit, ...),
+    cavi = postprocess_cavi(fit, ...),
+    blast = postprocess_blast(fit, ...),
     stop("Unknown method: ", method, call. = FALSE)
   )
 }
