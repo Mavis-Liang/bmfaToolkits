@@ -1,8 +1,8 @@
 ---
-title: "Toy-data workflows"
+title: "Demonstration and example usage of bmfaToolkits"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Toy-data workflows}
+  %\VignetteIndexEntry{Demonstration and example usage of bmfaToolkits}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
