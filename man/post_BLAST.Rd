@@ -4,7 +4,8 @@
 \alias{postprocess_blast}
 \title{Post-process BLAST output into a standard format}
 \usage{
-post_BLAST(fit)\npostprocess_blast(fit, ...)
+post_BLAST(fit) 
+postprocess_blast(fit, ...)
 }
 \arguments{
 \item{fit}{A \code{bifa_fit} returned by \code{fit_blast()} or a raw BLAST fit list.}

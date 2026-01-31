@@ -352,7 +352,7 @@ out <- fit_bmsfa_2step(
 
 ---
 
-## Method G: CAVI (VI-MSFA backend)
+# Method G: CAVI (VI-MSFA backend)
 
 CAVI is a variational inference algorithm for multi-study factor analysis implemented in the GitHub repo
 `blhansen/VI-MSFA` (R package name: `VIMSFA`).
@@ -417,7 +417,7 @@ post2_alt <- bmfaToolkits::fit_cavi_2step(Y_list, k = 8, j_s = 6, cutoff = 0.05,
                                          centering = TRUE, scaling = FALSE)
 ```
 
-## Method G. BLAST  (script backend)
+# Method H. BLAST  (script backend)
 
 BLAST is implemented as a research-code repository (not a CRAN/Bioconductor package) in:
 `maurilorenzo/BLAST`.

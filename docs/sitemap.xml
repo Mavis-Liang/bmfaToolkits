@@ -10,8 +10,11 @@
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/available_backends.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/backend_script_dir.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/bifa_extdata.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_blast.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_bmsfa_2step.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_cavi.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_cavi_2step.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_ind_fa_2step.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/fit_integrative_fa.html</loc></url>
@@ -39,9 +42,14 @@
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_stack_fa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_sufa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/postprocess_tetris.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/post_BLAST.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/post_CAVI.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/refit_cavi.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_js_bmsfa.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_js_cavi.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_js_ind_fa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_k_bmsfa.html</loc></url>
+<url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_k_cavi.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_k_from_sigma.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_k_pfa.html</loc></url>
 <url><loc>https://mavis-liang.github.io/bmfaToolkits/reference/select_k_stack_fa.html</loc></url>

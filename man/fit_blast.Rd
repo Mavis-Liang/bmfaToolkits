@@ -3,7 +3,7 @@
 \alias{fit_blast}
 \title{Fit BLAST (script backend)}
 \usage{
-fit_blast(Y_list, k, q_s, n_MC = 10000, center = TRUE, scale = FALSE,\n  subsample_index = NULL, sample_outer_product = FALSE, ...)
+fit_blast(Y_list, k, q_s, n_MC = 10000, center = TRUE, scale = FALSE, subsample_index = NULL, sample_outer_product = FALSE, ...)
 }
 \arguments{
 \item{Y_list}{List of S study matrices (each n_s x P).}

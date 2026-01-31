@@ -4,7 +4,8 @@
 \alias{postprocess_cavi}
 \title{Post-process CAVI output into a standard format}
 \usage{
-post_CAVI(fit)\npostprocess_cavi(fit, ...)
+post_CAVI(fit)
+postprocess_cavi(fit, ...)
 }
 \arguments{
 \item{fit}{A \code{bifa_fit} returned by \code{fit_cavi()} or a raw CAVI fit list.}
