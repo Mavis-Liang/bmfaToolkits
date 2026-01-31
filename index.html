@@ -35,7 +35,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/toy_workflows.html">Toy-data workflows</a></li>
+<li><a class="dropdown-item" href="articles/toy_workflows.html">Demonstration and example usage of bmfaToolkits</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -52,7 +52,44 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><p>If you are not redirected automatically, open: <a href="https://mavis-liang.github.io/bmfaToolkits/articles/toy_workflows.html">Toy workflows</a></p>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="bmfatoolkits">bmfaToolkits<a class="anchor" aria-label="anchor" href="#bmfatoolkits"></a>
+</h1></div>
+<p>Toolkits and reproducible workflows for Bayesian integrative factor analysis methods, with a lightweight “works out of the box” interface and optional backends for additional models.</p>
+<p>Detail usage see <a href="https://mavis-liang.github.io/bmfaToolkits/">https://mavis-liang.github.io/bmfaToolkits/</a>. Navigate to the “Articles” tab for vignettes.</p>
+<p>Can also refer to <a href="https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/" class="external-link">https://mavis-liang.github.io/Bayesian_integrative_FA_tutorial_book/</a>. (Archived 1/31/2026)</p>
+<div class="section level2">
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+</h2>
+<div class="section level3">
+<h3 id="development-version-github">Development version (GitHub)<a class="anchor" aria-label="anchor" href="#development-version-github"></a>
+</h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Mavis-Liang/bmfaToolkits"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="optional-backends">Optional backends<a class="anchor" aria-label="anchor" href="#optional-backends"></a>
+</h2>
+<p>Some methods depend on optional packages and/or vendored scripts. Use available_backends() to see what is usable on your system, and install extras as needed.</p>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Mavis-Liang/bmfaToolkits" class="external-link">bmfaToolkits</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/available_backends.html">available_backends</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
+<p>If a backend is missing, the corresponding fit_*() function will give a clear message telling you what to install.</p>
+</div>
+<div class="section level2">
+<h2 id="quick-start">Quick start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
+</h2>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Mavis-Liang/bmfaToolkits" class="external-link">bmfaToolkits</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Example: MOM-SS (requires BFR.BE)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_momss.html">fit_momss</a></span><span class="op">(</span><span class="va">Y_list</span>, k <span class="op">=</span> <span class="fl">6</span>, scaling <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Y_list is a list of N_s x P data matrices</span></span>
+<span><span class="va">pp</span>  <span class="op">&lt;-</span> <span class="fu"><a href="reference/postprocess_momss.html">postprocess_momss</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Plot an estimated shared covariance (example)</span></span>
+<span><span class="fu"><a href="reference/plot_single_loadings.html">plot_single_loadings</a></span><span class="op">(</span><span class="va">pp</span><span class="op">$</span><span class="va">Phi</span>, show_colorbar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

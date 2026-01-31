@@ -1,4 +1,4 @@
-# Toy-data workflows
+# Demonstration and example usage of bmfaToolkits
 
 ### 0. Install / load
 
