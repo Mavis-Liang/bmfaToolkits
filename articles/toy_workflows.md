@@ -7,7 +7,7 @@ Many methods are implemented in **optional backends**
 
 ``` r
 # install.packages("remotes")
-# remotes::install_local("path/to/bmfaToolkits")  # or install from your repo
+# remotes::install_github("Mavis-Liang/bmfaToolkits")
 library(bmfaToolkits)
 ```
 
