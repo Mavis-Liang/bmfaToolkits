@@ -36,10 +36,7 @@ Suggests:
     knitr,
     rmarkdown,
     doParallel,
-    peakRAM,
-    VIMSFA
-Remotes:
-    VIMSFA=blhansen/VI-MSFA
+    peakRAM
 VignetteBuilder: knitr
 URL: https://github.com/Mavis-Liang/bmfaToolkits, https://mavis-liang.github.io/bmfaToolkits/
 BugReports: https://github.com/Mavis-Liang/bmfaToolkits/issues

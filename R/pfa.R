@@ -87,61 +87,92 @@ postprocess_pfa <- function(fit) {
   if (is.null(fit$Loading) || is.null(fit$Latentsigma) || is.null(fit$Errorsigma) || is.null(fit$Pertmat)) {
     stop("PFA fit must contain $Loading, $Latentsigma, $Errorsigma, $Pertmat.", call. = FALSE)
   }
-  K_set <- vapply(fit$Loading, ncol, integer(1))
-  mode_k <- as.numeric(names(which.max(table(K_set))))
-  kept <- which(K_set == mode_k)
-
-  Loading <- fit$Loading[kept]
-  Latentsigma <- fit$Latentsigma[kept]
-  Errorsigma <- fit$Errorsigma[kept]
-  Pertmat <- fit$Pertmat[kept]
-  npost <- length(kept)
-  p <- nrow(Loading[[1]])
-  S <- ncol(Pertmat[[1]]) / p
-
-  posteriorPhis <- array(NA, dim = c(p, mode_k, npost))
-  posteriorLams <- lapply(seq_len(S), function(s) array(NA, dim = c(p, mode_k, npost)))
-
-  sharevar <- vector("list", npost)
-  post_SigmaLambda <- lapply(seq_len(S), function(s) vector("list", npost))
-  post_SigmaMarginal <- lapply(seq_len(S), function(s) vector("list", npost))
-  Psi <- vector("list", npost)
-
-  for (i in seq_len(npost)) {
-    posteriorPhis[,,i] <- Loading[[i]] %*% diag(Latentsigma[[i]])
-    sharevar[[i]] <- Loading[[i]] %*% diag(Latentsigma[[i]]^2) %*% t(Loading[[i]]) +
-      diag(Errorsigma[[i]]^2)
-
-    for (s in seq_len(S)) {
-      Q_temp_inv <- solve(matrix(Pertmat[[i]][, s], p, p))
-      post_SigmaMarginal[[s]][[i]] <- Q_temp_inv %*% sharevar[[i]] %*% t(Q_temp_inv)
-      post_SigmaLambda[[s]][[i]] <- post_SigmaMarginal[[s]][[i]] - sharevar[[i]]
+  # Determine posterior dimension (number of factors per sample)
+  k_vec <- sapply(fit$Loading, ncol)
+  mode_k <- as.numeric(names(sort(table(k_vec), decreasing = TRUE)[1]))
+  
+  # Filter posterior samples to those with mode_k
+  keep_idx <- which(k_vec == mode_k)
+  fit$Loading <- fit$Loading[keep_idx]
+  fit$Latentsigma <- fit$Latentsigma[keep_idx]
+  fit$Errorsigma <- fit$Errorsigma[keep_idx]
+  fit$Pertmat <- fit$Pertmat[keep_idx]
+  
+  npost <- length(fit$Loading)
+  p <- nrow(fit$Loading[[1]])
+  k <- mode_k
+  S <- dim(fit$Pertmat[[1]])[2]
+  
+  posteriorPhis <- array(0, dim = c(p, k, npost))
+  posteriorLams <- vector("list", S)
+  
+  for(s in 1:S){
+    posteriorLams[[s]] <- array(0, dim = c(p, k, npost))
+    for(i in 1:npost){
+      posteriorPhis[,,i] <- fit$Loading[[i]] %*% diag(fit$Latentsigma[[i]])
+      posteriorLams[[s]][,,i] <- (solve(matrix(fit$Pertmat[[i]][, s], p, p)) - diag(p)) %*% posteriorPhis[,,i]
     }
-    Psi[[i]] <- diag(Errorsigma[[i]]^2)
   }
-
+  
+  # Varimax rotation
   est_Phi <- MSFA::sp_OP(posteriorPhis, itermax = 10, trace = FALSE)$Phi
-  est_speLoad <- lapply(posteriorLams, function(x) MSFA::sp_OP(x, itermax = 10, trace = FALSE)$Phi)
-
-  est_SigmaPhi <- Reduce("+", sharevar) / npost
-  est_SigmaLambdaList <- lapply(seq_len(S), function(s) Reduce("+", post_SigmaLambda[[s]]) / npost)
-  est_SigmaMarginal <- lapply(seq_len(S), function(s) Reduce("+", post_SigmaMarginal[[s]]) / npost)
-
-  est_Psi_list <- lapply(seq_len(S), function(s) diag(diag(est_SigmaMarginal[[s]] - est_SigmaPhi)))
-  est_Psi <- Reduce("+", est_Psi_list) / S
-
-  est_Q <- Reduce("+", Pertmat) / npost
-  est_Q_list <- lapply(seq_len(S), function(s) matrix(est_Q[, s], p, p))
-
-  list(Phi = est_Phi,
-       SigmaPhi = est_SigmaPhi,
-       LambdaList = est_speLoad,
-       SigmaLambdaList = est_SigmaLambdaList,
-       PsiList = est_Psi_list,
-       Psi = est_Psi,
-       QList = est_Q_list,
-       SigmaMarginal = est_SigmaMarginal,
-       mode_k = mode_k)
+  # For study-specific loadings: 
+  # Study 1 should be the same as the shared loading
+  # Only apply rotation to studies 2:S
+  est_speLoad <- vector("list", S)
+  est_speLoad[[1]] <- est_Phi
+  
+  if(S > 1) {
+    for(s in 2:S) {
+      est_speLoad[[s]] <- MSFA::sp_OP(posteriorLams[[s]], itermax = 10, trace = FALSE)$Phi
+    }
+  }
+  # Estimated covariance components
+  sharevar <- list()
+  est_SigmaLambdaList <- vector("list", S)
+  est_SigmaMarginal <- vector("list", S)
+  est_Psi_list <- list()
+  
+  for(s in 1:S){
+    post_SigmaLambda_s <- vector("list", npost)
+    post_SigmaMarginal_s <- vector("list", npost)
+    Psi <- vector("list", npost)
+    
+    for(i in 1:npost){
+      sharevar[[i]] <- fit$Loading[[i]] %*% diag(fit$Latentsigma[[i]]^2) %*% t(fit$Loading[[i]]) + 
+        diag(fit$Errorsigma[[i]]^2)
+      Q_temp_inv <- solve(matrix(fit$Pertmat[[i]][, s], p, p))
+      if (s==1) {
+        post_SigmaLambda_s[[i]] = sharevar[[i]]
+        post_SigmaMarginal_s[[i]] <- sharevar[[i]]
+      } else {
+        post_SigmaMarginal_s[[i]] <- Q_temp_inv %*% sharevar[[i]] %*% t(Q_temp_inv)
+        post_SigmaLambda_s[[i]] <- post_SigmaMarginal_s[[i]] - sharevar[[i]]
+      }
+      Psi[[i]] <- diag(fit$Errorsigma[[i]]^2)
+    }
+    
+    est_SigmaMarginal[[s]] <- Reduce('+', post_SigmaMarginal_s) / npost
+    est_SigmaLambdaList[[s]] <- Reduce('+', post_SigmaLambda_s) / npost
+    est_Psi_list[[s]] <- Reduce('+', Psi) / npost
+  }
+  
+  est_Psi <- Reduce('+', est_Psi_list) / S
+  est_SigmaPhi <- Reduce('+', sharevar) / npost
+  est_Q <- Reduce('+', fit$Pertmat) / npost
+  est_Q_list <- lapply(1:S, function(s) matrix(est_Q[, s], p, p))
+  
+  list(
+    Phi = est_Phi,
+    SigmaPhi = est_SigmaPhi,
+    Psi = est_Psi,
+    Q = est_Q_list,
+    LambdaList = est_speLoad,
+    SigmaLambdaList = est_SigmaLambdaList,
+    SigmaMarginal = est_SigmaMarginal,
+    mode_k = mode_k,
+    kept_samples = length(keep_idx)
+  )
 }
 
 #' Select K for PFA via nontrivial-column rule
