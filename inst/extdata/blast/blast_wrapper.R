@@ -30,7 +30,8 @@ pre_estimate_factors <- function(Y, k=NA, q_s=NA, k_max=50, tau=0.1, flag_svd_y=
     } else{
       s_Y_s <- svd(Y[[s]], nu=k_max, nv=k_max)
     }
-    Vs_tilde <-  s_Y_s$v[, 1:qs[s]]
+    # Vs_tilde <- s_Y_s$v[, 1:qs[s]]
+    Vs_tilde <-  s_Y_s$v[, seq_len(qs[s]), drop = FALSE]
     Vs_tilde_outer[,,s] <- Vs_tilde %*% t(Vs_tilde)
   }
   
@@ -46,7 +47,8 @@ pre_estimate_factors <- function(Y, k=NA, q_s=NA, k_max=50, tau=0.1, flag_svd_y=
     q_s <- qs - k
     q_s[q_s<1] <- 1
   }
-  V_bar <-  s_L$u[, 1:k]
+  # V_bar <-  s_L$u[, 1:k]
+  V_bar <- s_L$u[,  seq_len(k),     drop = FALSE]
   V_bar_outer <- V_bar %*% t(V_bar)
   V_bar_outer_perp <- diag(1, p, p) - V_bar_outer
   
@@ -59,19 +61,26 @@ pre_estimate_factors <- function(Y, k=NA, q_s=NA, k_max=50, tau=0.1, flag_svd_y=
   for(s in 1:S){
     n <- nrow(Y[[s]])
     Y_hats_perp[[s]] <- Y[[s]] %*%  V_bar_outer_perp
-    Fs[[s]] <- svd(Y_hats_perp[[s]])$u[,1:q_s[s]] * sqrt(n)
+    # Fs[[s]] <- svd(Y_hats_perp[[s]])$u[,1:q_s[s]] * sqrt(n)
+    Fs[[s]] <- svd(Y_hats_perp[[s]])$u[, seq_len(q_s[s]), drop = FALSE] * sqrt(n)
     QFs <- diag(1, n , n)  - Fs[[s]] %*% t(Fs[[s]]) / n 
     Ys_shared <- QFs %*%  Y[[s]]
     Y_shared <- rbind(Y_shared, Ys_shared)
-    Ms_2[[s]] <- svd(Ys_shared)$u[,1:k] * sqrt(n)
+    #Ms_2[[s]] <- svd(Ys_shared)$u[,1:k] * sqrt(n)
+    Ms_2[[s]]<- svd(Ys_shared)$u[, seq_len(k), drop = FALSE] * sqrt(n)
   }
   if(svd_cpp){
     s_Y_shared <- compute_svd_cpp(Y_shared, flag=flag_svd_y)
   } else {
     s_Y_shared <- svd(Y_shared, nu=k, nv=k)
   }
-  M_joint <- s_Y_shared$u[,1:k]*sqrt(sum(ns))
-  prec_joint <- s_Y_shared$v[,1:k] %*% diag(s_Y_shared$d[1:k]) / sqrt(sum(ns))
+  #M_joint <- s_Y_shared$u[,1:k]*sqrt(sum(ns))
+  #prec_joint <- s_Y_shared$v[,1:k] %*% diag(s_Y_shared$d[1:k]) / sqrt(sum(ns))
+  k <- max(1L, as.integer(k))  # prevent k=0 edge case
+  M_joint <- s_Y_shared$u[, seq_len(k), drop = FALSE] * sqrt(sum(ns))
+  prec_joint <- s_Y_shared$v[, seq_len(k), drop = FALSE] %*%
+    diag(s_Y_shared$d[seq_len(k)], nrow = k, ncol = k) / sqrt(sum(ns))
+  
   return(list(M=M_joint, Fs=Fs, prec=prec_joint, k=k, q_s=q_s, Y_shared=Y_shared,
               Ms_2 = Ms_2, V_bar_outer_perp=V_bar_outer_perp, P_tilde=V_tilde_outer_mean))
 }
@@ -122,7 +131,7 @@ fit_blast <- function(
   factors_estimates <- pre_estimate_factors(
     Y, k=k, q_s=q_s, k_max=k_max, flag_svd_y=flag_svd_y, flag_svd_p=flag_svd_p,
     svd_cpp=svd_cpp, tau=tau
-    )
+  )
   k <- factors_estimates$k
   q_s <- factors_estimates$q_s
   
@@ -137,7 +146,7 @@ fit_blast <- function(
   rho_Gammas <- rep(1, S)
   print(paste0('number of shared latent factors: ', k))
   print(paste0('number of study-specific latent factors: ', q_s))
-
+  
   M_joint <- factors_estimates$M
   Fs <- factors_estimates$Fs
   Ms <- compute_Ms(M_joint, ns, S)
@@ -153,7 +162,7 @@ fit_blast <- function(
   mu_Lambda <- t(Y_joint) %*% M_joint / (n_joint + 1/tau_2_hat_s)
   mu_Lambda_samples <- array(rep(mu_Lambda, n_MC), dim = c(n_MC, p, k))
   rho_Lambda <- 1
-
+  
   
   if(cc_Lambda){
     B <- compute_B_Lambda(mu_Lambda, V_js)
@@ -165,7 +174,7 @@ fit_blast <- function(
                                   gamma_0=1, delta_0=1, N_mc=n_MC, rho=rho_Lambda,
                                   subsample_index=subsample_index, sample_outer_product=FALSE)
   Lambda_outer_mean <-  Lambda_samples$Lambda_outer_mean
-
+  
   if(sample_outer_product){
     Lambda_outer_samples <- array(NA, dim=c(p_sample, p_sample, n_MC))
     Lambda_outer_samples[,,] <- sample_Lambda_outer(Lambda_samples$Lambda_samples[subsample_index,,])
@@ -235,12 +244,14 @@ compute_Ms_cross <- function(M, n_s, S){
   index_start <- 1
   index_finish <- n_s[1]
   Ms_cross <- list()
-  Ms_cross[[1]] <- crossprod(M[1:n_s[1],], M[1:n_s[1],])
+  #Ms_cross[[1]] <- crossprod(M[1:n_s[1],], M[1:n_s[1],])
+  Ms_cross[[1]] <- crossprod(M[1:n_s[1], , drop = FALSE])
   for(s in 2:S){
     index_start <- index_finish + 1
     index_finish <- index_finish + n_s[s]
-    Ms_cross[[s]] <- crossprod(M[index_start:index_finish,], 
-                               M[index_start:index_finish,])
+    # Ms_cross[[s]] <- crossprod(M[index_start:index_finish,], 
+    #  M[index_start:index_finish,])
+    Ms_cross[[s]] <- crossprod(M[index_start:index_finish, , drop = FALSE])
     
   }
   return(Ms_cross)
@@ -250,11 +261,13 @@ compute_Ms <- function(M, n_s, S){
   index_start <- 1
   index_finish <- n_s[1]
   Ms <- list()
-  Ms[[1]] <-M[1:n_s[1],]
+  #Ms[[1]] <-M[1:n_s[1],]
+  Ms[[1]] <- M[1:n_s[1], , drop = FALSE]
   for(s in 2:S){
     index_start <- index_finish + 1
     index_finish <- index_finish + n_s[s]
-    Ms[[s]] <- M[index_start:index_finish,]
+    #Ms[[s]] <- M[index_start:index_finish,]
+    Ms[[s]] <- M[index_start:index_finish, , drop = FALSE]
     
   }
   return(Ms)
