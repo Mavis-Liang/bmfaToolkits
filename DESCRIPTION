@@ -39,7 +39,7 @@ Suggests:
     peakRAM,
     VIMSFA
 Remotes:
-    blhansen/VI-MSFA
+    VIMSFA=blhansen/VI-MSFA
 VignetteBuilder: knitr
 URL: https://github.com/Mavis-Liang/bmfaToolkits, https://mavis-liang.github.io/bmfaToolkits/
 BugReports: https://github.com/Mavis-Liang/bmfaToolkits/issues
